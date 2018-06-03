@@ -64,7 +64,7 @@ namespace AstarProj
                     if (word[i] != '-' && word[i + 1] == '-')
                     {
                         tempChar = tempWord.ElementAt(i);
-                        tempWord = tempWord.Remove(i, 1); //used to be i!!!!
+                        tempWord = tempWord.Remove(i, 1);
                         tempWord = tempWord.Insert(i + 1, tempChar.ToString());
                         moveMade = true;
                     }

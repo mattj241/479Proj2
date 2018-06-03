@@ -13,10 +13,11 @@ namespace AstarProj
         {
             while (true)
             {
+                bool impossible = false;
                 HeuristicBoard mainBoard = new HeuristicBoard();
                 mainBoard.SetBoard();
                 UInt64 steps = 1;
-                while (!mainBoard.Done)
+                while (!mainBoard.Done && !impossible)
                 {
                     if (mainBoard.Method == 1)
                     {
@@ -27,11 +28,18 @@ namespace AstarProj
                         mainBoard.BnB_expand();
                     }
                     List<Word> partialPaths = mainBoard.partialPaths;
+                    if (steps > 5000000)
+                    {
+                        Console.WriteLine("Likely impossible with only moves in the right direction.\n");
+                        impossible = true;
+                    }
                     steps++;
                 }
-                Console.WriteLine($"{mainBoard.GoalWord} found on step {steps}! \n");
+                if (!impossible)
+                {
+                    Console.WriteLine($"{mainBoard.GoalWord} found on step {steps}! \n");
+                }
             }
-            //Console.ReadKey();
         }
     }
 }
