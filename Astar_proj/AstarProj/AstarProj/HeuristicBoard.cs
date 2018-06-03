@@ -59,6 +59,14 @@ namespace AstarProj
                     moveMade = true;
                 }
 
+                //else if (i == word.Length - 1 && word[i] != '-' && word[i - 1] == '-')
+                //{
+                //    tempChar = tempWord.ElementAt(i);
+                //    tempWord = tempWord.Remove(i, 1);
+                //    tempWord = tempWord.Insert(i - 1, tempChar.ToString());
+                //    moveMade = true;
+                //}
+
                 else if (i != 0 && i != word.Length - 1)
                 {
                     if (word[i] != '-' && word[i + 1] == '-')
@@ -68,6 +76,14 @@ namespace AstarProj
                         tempWord = tempWord.Insert(i + 1, tempChar.ToString());
                         moveMade = true;
                     }
+
+                    //else if (word[i] != '-' && word[i - 1] == '-')
+                    //{
+                    //    tempChar = tempWord.ElementAt(i);
+                    //    tempWord = tempWord.Remove(i, 1);
+                    //    tempWord = tempWord.Insert(i - 1, tempChar.ToString());
+                    //    moveMade = true;
+                    //}
                 }
                 if (Mode == 0 && moveMade)
                 {
@@ -180,6 +196,7 @@ namespace AstarProj
         public int getEstimator(string inputWord)
         {
             int charactersMatched = 0;
+            int charactersUnmathched = 0;
 
             for (int i = 0; i < inputWord.Length; i++)
             {
@@ -188,7 +205,8 @@ namespace AstarProj
                     charactersMatched = charactersMatched + 1;
                 }
             }
-            return charactersMatched * 2;
+            charactersUnmathched = inputWord.Length - charactersMatched;
+            return (charactersMatched * 2) - charactersUnmathched;
         }
 
         List<Word> RemoveRedundantPaths(List<Word> inputPaths)
