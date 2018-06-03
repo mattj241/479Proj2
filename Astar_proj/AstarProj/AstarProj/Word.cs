@@ -28,11 +28,12 @@ namespace AstarProj
             this.PastSteps = previousSteps + initialState + " ";
 
         }
-        public Word(string initialState, int distance, int toGo)
+        public Word(string initialState, int distance, int toGo, string previousSteps)
         {
             this.CurrentState = initialState;
             this.DistanceTraveled = distance;
             this.DistanceToGoal = toGo;
+            this.PastSteps = previousSteps + initialState + " ";
         }
     }
 

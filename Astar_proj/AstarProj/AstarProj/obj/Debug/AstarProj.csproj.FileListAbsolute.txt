@@ -12,3 +12,10 @@ C:\Users\londo\OneDrive\HOMEWORK\Summer 2018\CIS 479\Astar_proj\AstarProj\AstarP
 C:\Users\londo\OneDrive\HOMEWORK\Summer 2018\CIS 479\Astar_proj\AstarProj\AstarProj\obj\Debug\AstarProj.exe
 C:\Users\londo\OneDrive\HOMEWORK\Summer 2018\CIS 479\Astar_proj\AstarProj\AstarProj\obj\Debug\AstarProj.pdb
 C:\Users\londo\OneDrive\HOMEWORK\Summer 2018\CIS 479\Astar_proj\AstarProj\AstarProj\obj\Debug\AstarProj.csprojResolveAssemblyReference.cache
+C:\Users\londo\Documents\GitHub\479Proj2\Astar_proj\AstarProj\AstarProj\bin\Debug\AstarProj.exe.config
+C:\Users\londo\Documents\GitHub\479Proj2\Astar_proj\AstarProj\AstarProj\bin\Debug\AstarProj.exe
+C:\Users\londo\Documents\GitHub\479Proj2\Astar_proj\AstarProj\AstarProj\bin\Debug\AstarProj.pdb
+C:\Users\londo\Documents\GitHub\479Proj2\Astar_proj\AstarProj\AstarProj\obj\Debug\AstarProj.csprojResolveAssemblyReference.cache
+C:\Users\londo\Documents\GitHub\479Proj2\Astar_proj\AstarProj\AstarProj\obj\Debug\AstarProj.csproj.CoreCompileInputs.cache
+C:\Users\londo\Documents\GitHub\479Proj2\Astar_proj\AstarProj\AstarProj\obj\Debug\AstarProj.exe
+C:\Users\londo\Documents\GitHub\479Proj2\Astar_proj\AstarProj\AstarProj\obj\Debug\AstarProj.pdb
