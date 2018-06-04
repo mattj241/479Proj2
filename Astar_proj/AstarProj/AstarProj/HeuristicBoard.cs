@@ -271,7 +271,7 @@ namespace AstarProj
                 CheckIfGoalStateFound(partialPaths);
                 return false;
             }
-            catch
+            catch (ArgumentOutOfRangeException)
             {
                 return true;
             }
@@ -304,7 +304,7 @@ namespace AstarProj
                 CheckIfGoalStateFound(partialPaths);
                 return false;
             }
-            catch
+            catch (ArgumentOutOfRangeException)
             {
                 return true;
             }
