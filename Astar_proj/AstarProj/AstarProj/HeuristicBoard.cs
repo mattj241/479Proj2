@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace AstarProj
 {
+    //Meat and potatoes class, all heuristics done here
     public class HeuristicBoard
     {
         public string InitialWord { get; set; } //start state word
@@ -251,22 +252,29 @@ namespace AstarProj
         Pre: n/a
         Post: the expand step is completed and ready for the next step if needed
        */
-        public void BnB_expand()
+        public bool BnB_expand()
         {
             List<Word> tempPaths = new List<Word>();
+            try
+            {
+                //assemble childPaths to add to the front of the queue
+                Word evaluation = partialPaths[0];
+                List<Word> childShiftPaths = GetChildren_fromShifts(evaluation, 0);
+                List<Word> childJumpPaths = GetChildren_fromJumps(evaluation, 0);
+                List<Word> allChildrenPaths = new List<Word>(childShiftPaths.Concat(childJumpPaths));
 
-            //assemble childPaths to add to the front of the queue
-            Word evaluation = partialPaths[0];
-            List<Word> childShiftPaths = GetChildren_fromShifts(evaluation, 0);
-            List<Word> childJumpPaths = GetChildren_fromJumps(evaluation, 0);
-            List<Word> allChildrenPaths = new List<Word>(childShiftPaths.Concat(childJumpPaths));
+                //memory managing for childPaths front of queue addition
+                partialPaths.RemoveRange(0, 1);
+                partialPaths.AddRange(allChildrenPaths);
 
-            //memory managing for childPaths front of queue addition
-            partialPaths.RemoveRange(0, 1);
-            partialPaths.AddRange(allChildrenPaths);
-
-            partialPaths = Sort_BnB(partialPaths);
-            CheckIfGoalStateFound(partialPaths);
+                partialPaths = Sort_BnB(partialPaths);
+                CheckIfGoalStateFound(partialPaths);
+                return false;
+            }
+            catch
+            {
+                return true;
+            }
         }
 
         /*
@@ -276,23 +284,30 @@ namespace AstarProj
         Pre: n/a
         Post: the expand step is completed and ready for the next step if needed
        */
-        public void Astar_expand()
+        public bool Astar_expand()
         {
             List<Word> tempPaths = new List<Word>();
+            try
+            {
+                //assemble childPaths to add to the front of the queue
+                Word evaluation = partialPaths[0];
+                List<Word> childShiftPaths = GetChildren_fromShifts(evaluation, 1);
+                List<Word> childJumpPaths = GetChildren_fromJumps(evaluation, 1);
+                List<Word> allChildrenPaths = new List<Word>(childShiftPaths.Concat(childJumpPaths));
 
-            //assemble childPaths to add to the front of the queue
-            Word evaluation = partialPaths[0];
-            List<Word> childShiftPaths = GetChildren_fromShifts(evaluation, 1);
-            List<Word> childJumpPaths = GetChildren_fromJumps(evaluation, 1);
-            List<Word> allChildrenPaths = new List<Word>(childShiftPaths.Concat(childJumpPaths));
+                //memory managing for childPaths front of queue addition
+                partialPaths.RemoveRange(0, 1);
+                partialPaths.AddRange(allChildrenPaths);
 
-            //memory managing for childPaths front of queue addition
-            partialPaths.RemoveRange(0, 1);
-            partialPaths.AddRange(allChildrenPaths);
-
-            partialPaths = RemoveRedundantPaths(partialPaths);
-            partialPaths = Sort_Astar(partialPaths);
-            CheckIfGoalStateFound(partialPaths);
+                partialPaths = RemoveRedundantPaths(partialPaths);
+                partialPaths = Sort_Astar(partialPaths);
+                CheckIfGoalStateFound(partialPaths);
+                return false;
+            }
+            catch
+            {
+                return true;
+            }
         }
 
         /*
