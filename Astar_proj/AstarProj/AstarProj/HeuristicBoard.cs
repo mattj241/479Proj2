@@ -59,14 +59,6 @@ namespace AstarProj
                     moveMade = true;
                 }
 
-                //else if (i == word.Length - 1 && word[i] != '-' && word[i - 1] == '-')
-                //{
-                //    tempChar = tempWord.ElementAt(i);
-                //    tempWord = tempWord.Remove(i, 1);
-                //    tempWord = tempWord.Insert(i - 1, tempChar.ToString());
-                //    moveMade = true;
-                //}
-
                 else if (i != 0 && i != word.Length - 1)
                 {
                     if (word[i] != '-' && word[i + 1] == '-')
@@ -76,15 +68,8 @@ namespace AstarProj
                         tempWord = tempWord.Insert(i + 1, tempChar.ToString());
                         moveMade = true;
                     }
-
-                    //else if (word[i] != '-' && word[i - 1] == '-')
-                    //{
-                    //    tempChar = tempWord.ElementAt(i);
-                    //    tempWord = tempWord.Remove(i, 1);
-                    //    tempWord = tempWord.Insert(i - 1, tempChar.ToString());
-                    //    moveMade = true;
-                    //}
                 }
+
                 if (Mode == 0 && moveMade)
                 {
                     Word childPath = new Word(tempWord, traveled, pastSteps);
@@ -120,29 +105,36 @@ namespace AstarProj
                 tempWord = word;
                 moveMade = false;
                 // if first character OR second
-                if (i <= 1 && word[i] != '-' && word[i + 1] != '-' && word[i + 2] == '-')
+                try
                 {
-                    tempChar = tempWord.ElementAt(i);
-                    tempWord = tempWord.Remove(i, 1);
-                    tempWord = tempWord.Insert(i, "-");
-
-                    tempWord = tempWord.Remove(i + 2, 1);
-                    tempWord = tempWord.Insert(i + 2, tempChar.ToString());
-                    moveMade = true;
-                }
-
-                else if (i > 1 &&  i < word.Length - 2)
-                {
-                    if (word[i] != '-' && word[i + 1] != '-' && word[i + 2] == '-')
+                    if (i <= 1 && word[i] != '-' && word[i + 1] != '-' && word[i + 2] == '-')
                     {
                         tempChar = tempWord.ElementAt(i);
-                        tempWord = tempWord.Remove(i, 1); 
+                        tempWord = tempWord.Remove(i, 1);
                         tempWord = tempWord.Insert(i, "-");
 
                         tempWord = tempWord.Remove(i + 2, 1);
                         tempWord = tempWord.Insert(i + 2, tempChar.ToString());
                         moveMade = true;
                     }
+
+                    else if (i > 1 && i < word.Length - 2)
+                    {
+                        if (word[i] != '-' && word[i + 1] != '-' && word[i + 2] == '-')
+                        {
+                            tempChar = tempWord.ElementAt(i);
+                            tempWord = tempWord.Remove(i, 1);
+                            tempWord = tempWord.Insert(i, "-");
+
+                            tempWord = tempWord.Remove(i + 2, 1);
+                            tempWord = tempWord.Insert(i + 2, tempChar.ToString());
+                            moveMade = true;
+                        }
+                    }
+                }
+                catch
+                {
+                    //DO nothing, exception handled by main
                 }
 
                 if (Mode == 0 && moveMade)
@@ -195,18 +187,23 @@ namespace AstarProj
 
         public int getEstimator(string inputWord)
         {
-            int charactersMatched = 0;
-            int charactersUnmathched = 0;
-
+            int estimatorValue = 0;
+            int maxAwardedValue = inputWord.Length - 1;
             for (int i = 0; i < inputWord.Length; i++)
             {
-                if (inputWord[i] == GoalWord[i])
+                if (inputWord[i] != '-')
                 {
-                    charactersMatched = charactersMatched + 1;
+                    int indexInGoalWord = GoalWord.IndexOf(inputWord[i]);
+                    int indicesDelta = indexInGoalWord - i;
+                    int dupCount = inputWord.Count(x => x == inputWord[i]);
+                    if (indicesDelta < 0 && dupCount < 2)
+                    {
+                        indicesDelta = 10000;
+                    }
+                    estimatorValue = estimatorValue + (maxAwardedValue - indicesDelta);
                 }
             }
-            charactersUnmathched = inputWord.Length - charactersMatched;
-            return (charactersMatched * 2) - charactersUnmathched;
+            return estimatorValue;
         }
 
         List<Word> RemoveRedundantPaths(List<Word> inputPaths)
@@ -247,10 +244,17 @@ namespace AstarProj
 
         public void CheckIfGoalStateFound(List<Word> paths)
         {
-            if (paths[0].CurrentState == GoalWord)
+            try
             {
-                Done = true;
-                Console.WriteLine(paths[0].PastSteps);
+                if (paths[0].CurrentState == GoalWord)
+                {
+                    Done = true;
+                    Console.WriteLine(paths[0].PastSteps);
+                }
+            }
+            catch
+            {
+                //DO nothing, excpetion handled in main
             }
         }
 

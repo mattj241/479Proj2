@@ -19,6 +19,8 @@ namespace AstarProj
                 UInt64 steps = 1;
                 while (!mainBoard.Done && !impossible)
                 {
+                    //this temp data structure is used to determine if any moves are possible, and if not, killing the search.
+                    List<Word> checkForUnchangedPaths = mainBoard.partialPaths; 
                     if (mainBoard.Method == 1)
                     {
                         mainBoard.Astar_expand();
@@ -28,9 +30,18 @@ namespace AstarProj
                         mainBoard.BnB_expand();
                     }
                     List<Word> partialPaths = mainBoard.partialPaths;
-                    if (steps > 5000000)
+
+                    if (((mainBoard.InitialWord.Count(x => x=='-')) != (mainBoard.InitialWord.Length/2)) ||
+                        ((mainBoard.GoalWord.Count(x => x == '-')) != (mainBoard.GoalWord.Length / 2))   ||
+                        !(partialPaths.Equals(checkForUnchangedPaths))                                   ||
+                        (mainBoard.InitialWord.Count(x => x == '-') == 0)                                ||
+                        (mainBoard.InitialWord.Count(x => x != '-') == 0)                                ||
+                        (mainBoard.GoalWord.Count(x => x == '-') == 0)                                   ||
+                        (mainBoard.GoalWord.Count(x => x != '-') == 0)                                   ||
+                        (mainBoard.InitialWord.Length > 2)                                               ||
+                        (mainBoard.GoalWord.Length > 2))
                     {
-                        Console.WriteLine("Likely impossible with only moves in the right direction.\n");
+                        Console.WriteLine("Impossible / not within requriements.\n");
                         impossible = true;
                     }
                     steps++;
